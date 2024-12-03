@@ -1,2 +1,2 @@
-# AssetTracking2
+# AssetTrackingEF
 Asset tracking system implemented using Entity Framework
