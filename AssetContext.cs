@@ -22,7 +22,7 @@ namespace AssetTrackerEF
                 DataSource = "localhost",
                 UserID = "sa",
                 Password = "dockerStrongPwd123",
-                InitialCatalog = "eftest2_w49",
+                InitialCatalog = "AssetTracker",
                 TrustServerCertificate = true
             };
         

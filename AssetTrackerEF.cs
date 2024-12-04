@@ -1,3 +1,4 @@
+using AssetTrackerEF.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using static System.Console;
 using static System.StringComparison;
@@ -9,13 +10,14 @@ namespace AssetTrackerEF
     */
     public class AssetTrackerEF
     {
-        private List<Asset> assets;
+      //  private List<Asset> assets;
         private ExchangeRates exchangeRates;
+        private AssetTrackerContext assetDb; 
 
         public AssetTrackerEF()
         {
-            assets = [];
-            var AssetDb = new AssetTrackerContext();
+            // assets = [];
+            assetDb = new AssetTrackerContext();
             exchangeRates = new();
             WriteLine("Welcome to AssetTracker 2.0 - Entity Framework Edition.");
         }
@@ -29,6 +31,8 @@ namespace AssetTrackerEF
         */
         public void PrettyPrint( bool sortByOffice = true )
         {
+            List<Asset> assets = assetDb.Assets.ToList();
+
             if( assets.Count == 0 )
             {
                 WriteLine("\nAsset list is empty!");
@@ -41,12 +45,12 @@ namespace AssetTrackerEF
             List<Asset> sortedAssets = 
                 sortByOffice ? 
                     assets.OrderBy(x => x.Office )
-                                     .ThenBy(x => x.DatePurchased)
-                                     .ToList()
+                          .ThenBy(x => x.DatePurchased)
+                          .ToList()
                     :
-                        assets.OrderBy(x => x.GetType().Name)
-                              .ThenBy(x => x.DatePurchased)
-                              .ToList();                  
+                    assets.OrderBy(x => x.GetType().Name)
+                          .ThenBy(x => x.DatePurchased)
+                          .ToList();                  
 
             WriteLine 
             ( 
@@ -115,22 +119,48 @@ namespace AssetTrackerEF
         public void InsertSampleData()
         {
             // AI was decent at creating this list, also gave me the right answers for dates that are 2 years and 3 months old
-            assets.Add( new Computer { Brand = "HP", Model = "Elitebook", Price = 1176.03m, Currency = "EUR", DatePurchased = new DateOnly( 2019, 6, 1 ), Office = "Spain" } );
-            assets.Add( new Computer { Brand = "Asus", Model = "W234", Price = 4900m, Currency = "SEK", DatePurchased = new DateOnly( 2020, 10, 2 ), Office = "Sweden" } );
-            assets.Add( new Computer { Brand = "Lenovo", Model = "Yoga 730", Price = 835m, Currency = "USD", DatePurchased = new DateOnly( 2018, 5, 28 ), Office = "USA" } );
-            assets.Add( new Phone { Brand = "Apple", Model = "Iphone 15", Price = 10000m, Currency = "USD", DatePurchased = new DateOnly( 2024, 9, 11 ), Office = "USA" } );
-            assets.Add( new Computer { Brand = "Lenovo", Model = "Yoga 530", Price = 1030m, Currency = "USD", DatePurchased = new DateOnly( 2019, 5, 21 ), Office = "USA" } );
-            assets.Add( new Computer { Brand = "Apple", Model = "Macbook Pro", Price = 970m, Currency = "EUR", DatePurchased = new DateOnly( 2022, 7, 13 ), Office = "Spain" } );
-            assets.Add( new Computer { Brand = "Apple", Model = "iPhone", Price = 818.18m, Currency = "EUR", DatePurchased = new DateOnly( 2020, 9, 25 ), Office = "Spain" } );
-            assets.Add( new Computer { Brand = "Apple", Model = "iPhone", Price = 10375m, Currency = "SEK", DatePurchased = new DateOnly( 2018, 7, 15 ), Office = "Sweden" } );
-            assets.Add( new Phone { Brand = "Motorola", Model = "Razr", Price = 8083.33m, Currency = "SEK", DatePurchased = new DateOnly( 2022, 5, 16 ), Office = "Sweden" } );
-            assets.Add( new Phone { Brand = "Samsung", Model = "Galaxy S23", Price = 8083.33m, Currency = "SEK", DatePurchased = new DateOnly( 2023, 3, 16 ), Office = "Sweden" } );
-            assets.Add( new Computer { Brand = "Asus", Model = "ROG 500", Price = 9999.90m, Currency = "SEK", DatePurchased = new DateOnly( 2024, 10, 15 ), Office = "Sweden" } );
-            assets.Add( new Phone { Brand = "Nokia", Model = "3310", Price = 160.11m, Currency = "EUR", DatePurchased = new DateOnly( 2019, 5, 16 ), Office = "Germany" } );
-            assets.Add( new Phone { Brand = "Xiaomi", Model = "14 Ultra", Price = 808.08m, Currency = "EUR", DatePurchased = new DateOnly( 2023, 3, 16 ), Office = "France" } );
+            // assets.Add( new Computer { Brand = "HP", Model = "Elitebook", Price = 1176.03m, Currency = "EUR", DatePurchased = new DateOnly( 2019, 6, 1 ), Office = "Spain" } );
+            // assets.Add( new Computer { Brand = "Asus", Model = "W234", Price = 4900m, Currency = "SEK", DatePurchased = new DateOnly( 2020, 10, 2 ), Office = "Sweden" } );
+            // assets.Add( new Computer { Brand = "Lenovo", Model = "Yoga 730", Price = 835m, Currency = "USD", DatePurchased = new DateOnly( 2018, 5, 28 ), Office = "USA" } );
+            // assets.Add( new Phone { Brand = "Apple", Model = "Iphone 15", Price = 10000m, Currency = "USD", DatePurchased = new DateOnly( 2024, 9, 11 ), Office = "USA" } );
+            // assets.Add( new Computer { Brand = "Lenovo", Model = "Yoga 530", Price = 1030m, Currency = "USD", DatePurchased = new DateOnly( 2019, 5, 21 ), Office = "USA" } );
+            // assets.Add( new Computer { Brand = "Apple", Model = "Macbook Pro", Price = 970m, Currency = "EUR", DatePurchased = new DateOnly( 2022, 7, 13 ), Office = "Spain" } );
+            // assets.Add( new Computer { Brand = "Apple", Model = "iPhone", Price = 818.18m, Currency = "EUR", DatePurchased = new DateOnly( 2020, 9, 25 ), Office = "Spain" } );
+            // assets.Add( new Computer { Brand = "Apple", Model = "iPhone", Price = 10375m, Currency = "SEK", DatePurchased = new DateOnly( 2018, 7, 15 ), Office = "Sweden" } );
+            // assets.Add( new Phone { Brand = "Motorola", Model = "Razr", Price = 8083.33m, Currency = "SEK", DatePurchased = new DateOnly( 2022, 5, 16 ), Office = "Sweden" } );
+            // assets.Add( new Phone { Brand = "Samsung", Model = "Galaxy S23", Price = 8083.33m, Currency = "SEK", DatePurchased = new DateOnly( 2023, 3, 16 ), Office = "Sweden" } );
+            // assets.Add( new Computer { Brand = "Asus", Model = "ROG 500", Price = 9999.90m, Currency = "SEK", DatePurchased = new DateOnly( 2024, 10, 15 ), Office = "Sweden" } );
+            // assets.Add( new Phone { Brand = "Nokia", Model = "3310", Price = 160.11m, Currency = "EUR", DatePurchased = new DateOnly( 2019, 5, 16 ), Office = "Germany" } );
+            // assets.Add( new Phone { Brand = "Xiaomi", Model = "14 Ultra", Price = 808.08m, Currency = "EUR", DatePurchased = new DateOnly( 2023, 3, 16 ), Office = "France" } );
         
 
-            WriteLine($"\nTest data added to list, Asset list now has {assets.Count} items.");
+            List<Asset> assets = [
+                new Computer { Brand = "HP", Model = "Elitebook", Price = 1176.03m, Currency = "EUR", DatePurchased = new DateOnly( 2019, 6, 1 ), Office = "Spain" },
+                new Computer { Brand = "Asus", Model = "W234", Price = 4900m, Currency = "SEK", DatePurchased = new DateOnly( 2020, 10, 2 ), Office = "Sweden" },
+                new Computer { Brand = "Lenovo", Model = "Yoga 730", Price = 835m, Currency = "USD", DatePurchased = new DateOnly( 2018, 5, 28 ), Office = "USA" },
+                new Phone { Brand = "Apple", Model = "Iphone 15", Price = 10000m, Currency = "USD", DatePurchased = new DateOnly( 2024, 9, 11 ), Office = "USA" },
+                new Computer { Brand = "Lenovo", Model = "Yoga 530", Price = 1030m, Currency = "USD", DatePurchased = new DateOnly( 2019, 5, 21 ), Office = "USA" },
+                new Computer { Brand = "Apple", Model = "Macbook Pro", Price = 970m, Currency = "EUR", DatePurchased = new DateOnly( 2022, 7, 13 ), Office = "Spain" },
+                new Phone { Brand = "Apple", Model = "iPhone", Price = 818.18m, Currency = "EUR", DatePurchased = new DateOnly( 2020, 9, 25 ), Office = "Spain" },
+                new Phone { Brand = "Apple", Model = "iPhone", Price = 10375m, Currency = "SEK", DatePurchased = new DateOnly( 2018, 7, 15 ), Office = "Sweden" },
+                new Phone { Brand = "Motorola", Model = "Razr", Price = 8083.33m, Currency = "SEK", DatePurchased = new DateOnly( 2022, 5, 16 ), Office = "Sweden" },
+                new Phone { Brand = "Samsung", Model = "Galaxy S23", Price = 8083.33m, Currency = "SEK", DatePurchased = new DateOnly( 2023, 3, 16 ), Office = "Sweden" },
+                new Computer { Brand = "Asus", Model = "ROG 500", Price = 9999.90m, Currency = "SEK", DatePurchased = new DateOnly( 2024, 10, 15 ), Office = "Sweden" },
+                new Phone { Brand = "Nokia", Model = "3310", Price = 160.11m, Currency = "EUR", DatePurchased = new DateOnly( 2019, 5, 16 ), Office = "Germany" },
+                new Phone { Brand = "Xiaomi", Model = "14 Ultra", Price = 808.08m, Currency = "EUR", DatePurchased = new DateOnly( 2023, 3, 16 ), Office = "France" } 
+            ];
+            
+            assetDb.AddRange( assets );
+            assetDb.SaveChanges();
+
+            WriteLine($"\nTest data added to list, Asset list now has {assetDb.Assets.Count()} items.");
+        }
+
+
+        public void DeleteAllAssets()
+        {
+            assetDb.Assets.RemoveRange( assetDb.Assets.ToList() );
+            assetDb.SaveChanges();
         }
 
 
@@ -310,7 +340,8 @@ namespace AssetTrackerEF
                 }
             }
     
-            assets.Add(asset);
+            assetDb.Assets.Add(asset);
+            assetDb.SaveChanges();
 
             return true;
         }
@@ -354,7 +385,7 @@ namespace AssetTrackerEF
                     {
                         if( AddAssetProperties(asset) )
                         {
-                            WriteLine($"New asset added! Number assets in list: {assets.Count}");
+                            WriteLine($"New asset added! Number assets in list: {assetDb.Assets.Count()}");
                         }
                         else
                         {
@@ -376,6 +407,7 @@ namespace AssetTrackerEF
             WriteLine("\tT - Print list sorted by Type");
             WriteLine("\tS - Show asset list stats");
             WriteLine("\tF - Fill asset list with test data");
+            WriteLine("\tD - Delete all assets");
             WriteLine("\tQ - Quit");
         }
 
@@ -384,6 +416,7 @@ namespace AssetTrackerEF
         */
         public void ShowStats()
         {
+            List<Asset> assets = assetDb.Assets.ToList();
             // It's LINQ time!
             int count = assets.Count;
             int computers = assets.Where( item => item.GetType().Name.Equals("Computer")).ToList().Count;
@@ -445,6 +478,10 @@ namespace AssetTrackerEF
 
                 case "F":
                     InsertSampleData();           
+                    break;
+
+                case "D":
+                    DeleteAllAssets();
                     break;
 
                 case "S":
