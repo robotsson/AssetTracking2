@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using static System.Console;
 using static System.StringComparison;
 
@@ -29,11 +30,11 @@ namespace AssetTrackerEF
         */
         public void PrettyPrint( bool sortByOffice = true )
         {
-            List<Asset> assets = assetDb.Assets.ToList();
+            // List<Asset> assets = assetDb.Assets.ToList();
 
-            if( assets.Count == 0 )
+            if( assetDb.Assets.Count() == 0 )
             {
-                WriteLine("\nAsset list is empty!");
+                WriteLine("\nAsset db is empty!");
                 return; 
             }
 
@@ -46,12 +47,11 @@ namespace AssetTrackerEF
                           .ThenBy(x => x.DatePurchased)
                           .ToList()
                     :
-                    assetDb.Assets.OrderBy(x => x.GetType().Name )
+                    assetDb.Assets.OrderBy(x => EF.Property<string>(x, "Discriminator") )
                           .ThenBy(x => x.DatePurchased)
                           .ToList();
 
              
-
             WriteLine 
             ( 
                 "Type".PadRight(15) +
