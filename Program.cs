@@ -25,39 +25,3 @@ namespace AssetTrackerEF
 
     }
 }
-
-
-
-
-// var AssetDb = new AssetTrackerContext();
-
-// var Assets = AssetDb.Assets.ToList();
-// Assets.ForEach( x => AssetDb.Assets.Remove(x) );
-
-// Computer computer = new()
-// {   
-//     Brand = "HP",
-//     Model = "Elitebook",
-//     DatePurchased = new DateOnly( 2019, 6, 1 ),
-//     Price = 599.0m, 
-//     Currency = "USD" 
-// };
-
-// Phone phone = new()
-// {   
-//     Brand = "Nokia",
-//     Model = "3310",
-//     DatePurchased = new DateOnly( 2017, 6, 1 ),
-//     Price = 1000.0m, 
-//     Currency = "SEK" 
-// };
-
-// AssetDb.Assets.Add( computer );
-// AssetDb.Assets.Add( phone );
-
-
-// AssetDb.SaveChanges();
-
-// Assets = AssetDb.Assets.ToList();
-
-// Assets.ForEach( x => Console.WriteLine( x.Brand ) );

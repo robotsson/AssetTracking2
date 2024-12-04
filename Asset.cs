@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-
 namespace AssetTrackerEF {
     public class Asset
     {
@@ -31,10 +29,6 @@ namespace AssetTrackerEF {
         }
 
     }
-
-    // Offices: France, Germany, Spain, Sweden, USA
-    // Currencies = EUR, USD, SEK
-
 
     public class Phone : Asset {}
     public class Computer : Asset {}

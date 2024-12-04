@@ -1,5 +1,3 @@
-using AssetTrackerEF.Migrations;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using static System.Console;
 using static System.StringComparison;
 
@@ -44,13 +42,15 @@ namespace AssetTrackerEF
             // secondary sort criteria is Date Purchased in both cases
             List<Asset> sortedAssets = 
                 sortByOffice ? 
-                    assets.OrderBy(x => x.Office )
+                    assetDb.Assets.OrderBy(x => x.Office )
                           .ThenBy(x => x.DatePurchased)
                           .ToList()
                     :
-                    assets.OrderBy(x => x.GetType().Name)
+                    assetDb.Assets.OrderBy(x => x.GetType().Name )
                           .ThenBy(x => x.DatePurchased)
-                          .ToList();                  
+                          .ToList();
+
+             
 
             WriteLine 
             ( 
@@ -114,26 +114,11 @@ namespace AssetTrackerEF
         }
 
         /*
-            Helper method to make it easy to add a lot of assets into the asset list
+            Helper method to make it easy to add a lot of assets into the asset db
         */
         public void InsertSampleData()
         {
-            // AI was decent at creating this list, also gave me the right answers for dates that are 2 years and 3 months old
-            // assets.Add( new Computer { Brand = "HP", Model = "Elitebook", Price = 1176.03m, Currency = "EUR", DatePurchased = new DateOnly( 2019, 6, 1 ), Office = "Spain" } );
-            // assets.Add( new Computer { Brand = "Asus", Model = "W234", Price = 4900m, Currency = "SEK", DatePurchased = new DateOnly( 2020, 10, 2 ), Office = "Sweden" } );
-            // assets.Add( new Computer { Brand = "Lenovo", Model = "Yoga 730", Price = 835m, Currency = "USD", DatePurchased = new DateOnly( 2018, 5, 28 ), Office = "USA" } );
-            // assets.Add( new Phone { Brand = "Apple", Model = "Iphone 15", Price = 10000m, Currency = "USD", DatePurchased = new DateOnly( 2024, 9, 11 ), Office = "USA" } );
-            // assets.Add( new Computer { Brand = "Lenovo", Model = "Yoga 530", Price = 1030m, Currency = "USD", DatePurchased = new DateOnly( 2019, 5, 21 ), Office = "USA" } );
-            // assets.Add( new Computer { Brand = "Apple", Model = "Macbook Pro", Price = 970m, Currency = "EUR", DatePurchased = new DateOnly( 2022, 7, 13 ), Office = "Spain" } );
-            // assets.Add( new Computer { Brand = "Apple", Model = "iPhone", Price = 818.18m, Currency = "EUR", DatePurchased = new DateOnly( 2020, 9, 25 ), Office = "Spain" } );
-            // assets.Add( new Computer { Brand = "Apple", Model = "iPhone", Price = 10375m, Currency = "SEK", DatePurchased = new DateOnly( 2018, 7, 15 ), Office = "Sweden" } );
-            // assets.Add( new Phone { Brand = "Motorola", Model = "Razr", Price = 8083.33m, Currency = "SEK", DatePurchased = new DateOnly( 2022, 5, 16 ), Office = "Sweden" } );
-            // assets.Add( new Phone { Brand = "Samsung", Model = "Galaxy S23", Price = 8083.33m, Currency = "SEK", DatePurchased = new DateOnly( 2023, 3, 16 ), Office = "Sweden" } );
-            // assets.Add( new Computer { Brand = "Asus", Model = "ROG 500", Price = 9999.90m, Currency = "SEK", DatePurchased = new DateOnly( 2024, 10, 15 ), Office = "Sweden" } );
-            // assets.Add( new Phone { Brand = "Nokia", Model = "3310", Price = 160.11m, Currency = "EUR", DatePurchased = new DateOnly( 2019, 5, 16 ), Office = "Germany" } );
-            // assets.Add( new Phone { Brand = "Xiaomi", Model = "14 Ultra", Price = 808.08m, Currency = "EUR", DatePurchased = new DateOnly( 2023, 3, 16 ), Office = "France" } );
-        
-
+         
             List<Asset> assets = [
                 new Computer { Brand = "HP", Model = "Elitebook", Price = 1176.03m, Currency = "EUR", DatePurchased = new DateOnly( 2019, 6, 1 ), Office = "Spain" },
                 new Computer { Brand = "Asus", Model = "W234", Price = 4900m, Currency = "SEK", DatePurchased = new DateOnly( 2020, 10, 2 ), Office = "Sweden" },
@@ -402,13 +387,15 @@ namespace AssetTrackerEF
         */
         public void ListCommands()
         {
-            WriteLine("\n\tA - Add new asset to list");
-            WriteLine("\tP - Print list sorted by Office");
-            WriteLine("\tT - Print list sorted by Type");
-            WriteLine("\tS - Show asset list stats");
-            WriteLine("\tF - Fill asset list with test data");
-            WriteLine("\tD - Delete all assets");
-            WriteLine("\tQ - Quit");
+            WriteLine("\n  A - Add new asset to list");
+            WriteLine("  P - Print list sorted by Office");
+            WriteLine("  T - Print list sorted by Type");
+            WriteLine("  S - Show asset list stats");
+            WriteLine("  F - Fill asset list with test data");
+            WriteLine("  D - Delete all assets");
+            WriteLine("  Q - Quit");
+            WriteLine();
+            Write("Enter menu choice: ");
         }
 
         /*
@@ -417,14 +404,20 @@ namespace AssetTrackerEF
         public void ShowStats()
         {
             List<Asset> assets = assetDb.Assets.ToList();
-            // It's LINQ time!
-            int count = assets.Count;
-            int computers = assets.Where( item => item.GetType().Name.Equals("Computer")).ToList().Count;
-            int phones = assets.Where( item => item.GetType().Name.Equals("Phone")).ToList().Count;
-            int offices = assets.Select( item => item.Office ).Distinct().ToList().Count;
 
-            int redItems = assets.Where( item => item.MarkedRed() ).ToList().Count;
-            int yellowItems = assets.Where( item => item.MarkedYellow() ).ToList().Count;
+            int count = assetDb.Assets.Count();
+            int computers = assetDb.Assets.OfType<Computer>().Count();
+            int phones = assetDb.Assets.OfType<Phone>().Count();
+
+            int offices = assetDb.Assets.Select( asset => asset.Office ).Distinct().Count();
+
+
+            DateOnly red =  DateOnly.FromDateTime(DateTime.Now).AddMonths(-30);
+            DateOnly yellow = DateOnly.FromDateTime(DateTime.Now).AddMonths(-27);
+
+            int redItems = assetDb.Assets.Where( asset => asset.DatePurchased <= red ).Count();
+            int yellowItems = assetDb.Assets.Where( asset => asset.DatePurchased > red && 
+                                                             asset.DatePurchased <= yellow ).Count();
 
             WriteLine();
             WriteLine( $"Computers: {computers}" );
@@ -454,7 +447,7 @@ namespace AssetTrackerEF
         */
         public bool Run()
         {
-            Write("\n(A)dd Asset, (P)rint Asset List, List all (C)ommands or (Q)uit: " );
+            ListCommands();
             
             string? input = ReadLine()?.Trim().ToUpper();
                   
