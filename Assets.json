@@ -1,0 +1,132 @@
+[
+  {
+    "Id": 1,
+    "Brand": "HP",
+    "Model": "Elitebook",
+    "Price": "1176.03",
+    "Currency": "EUR",
+    "DatePurchased": "2019-06-01",
+    "Office": "Spain",
+    "Discriminator": "Computer"
+  },
+  {
+    "Id": 2,
+    "Brand": "Asus",
+    "Model": "W234",
+    "Price": "4900.00",
+    "Currency": "SEK",
+    "DatePurchased": "2020-10-02",
+    "Office": "Sweden",
+    "Discriminator": "Computer"
+  },
+  {
+    "Id": 3,
+    "Brand": "Lenovo",
+    "Model": "Yoga 730",
+    "Price": "835.00",
+    "Currency": "USD",
+    "DatePurchased": "2018-05-28",
+    "Office": "USA",
+    "Discriminator": "Computer"
+  },
+  {
+    "Id": 4,
+    "Brand": "Lenovo",
+    "Model": "Yoga 530",
+    "Price": "1030.00",
+    "Currency": "USD",
+    "DatePurchased": "2019-05-21",
+    "Office": "USA",
+    "Discriminator": "Computer"
+  },
+  {
+    "Id": 5,
+    "Brand": "Apple",
+    "Model": "Macbook Pro",
+    "Price": "970.00",
+    "Currency": "EUR",
+    "DatePurchased": "2022-07-13",
+    "Office": "Spain",
+    "Discriminator": "Computer"
+  },
+  {
+    "Id": 6,
+    "Brand": "Asus",
+    "Model": "ROG 500",
+    "Price": "9999.90",
+    "Currency": "SEK",
+    "DatePurchased": "2024-10-15",
+    "Office": "Sweden",
+    "Discriminator": "Computer"
+  },
+  {
+    "Id": 7,
+    "Brand": "Apple",
+    "Model": "Iphone 15",
+    "Price": "10000.00",
+    "Currency": "USD",
+    "DatePurchased": "2024-09-11",
+    "Office": "USA",
+    "Discriminator": "Phone"
+  },
+  {
+    "Id": 8,
+    "Brand": "Apple",
+    "Model": "iPhone",
+    "Price": "818.18",
+    "Currency": "EUR",
+    "DatePurchased": "2020-09-25",
+    "Office": "Spain",
+    "Discriminator": "Phone"
+  },
+  {
+    "Id": 9,
+    "Brand": "Apple",
+    "Model": "iPhone",
+    "Price": "10375.00",
+    "Currency": "SEK",
+    "DatePurchased": "2018-07-15",
+    "Office": "Sweden",
+    "Discriminator": "Phone"
+  },
+  {
+    "Id": 10,
+    "Brand": "Motorola",
+    "Model": "Razr",
+    "Price": "8083.33",
+    "Currency": "SEK",
+    "DatePurchased": "2022-05-16",
+    "Office": "Sweden",
+    "Discriminator": "Phone"
+  },
+  {
+    "Id": 11,
+    "Brand": "Samsung",
+    "Model": "Galaxy S23",
+    "Price": "8083.33",
+    "Currency": "SEK",
+    "DatePurchased": "2023-03-16",
+    "Office": "Sweden",
+    "Discriminator": "Phone"
+  },
+  {
+    "Id": 12,
+    "Brand": "Nokia",
+    "Model": "3310",
+    "Price": "160.11",
+    "Currency": "EUR",
+    "DatePurchased": "2019-05-16",
+    "Office": "Germany",
+    "Discriminator": "Phone"
+  },
+  {
+    "Id": 13,
+    "Brand": "Xiaomi",
+    "Model": "14 Ultra",
+    "Price": "808.08",
+    "Currency": "EUR",
+    "DatePurchased": "2023-03-16",
+    "Office": "France",
+    "Discriminator": "Phone"
+  }
+]
