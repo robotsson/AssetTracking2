@@ -18,17 +18,17 @@ namespace AssetTrackerEF
 
             // string ConnectionString = "Data Source=localhost;Initial Catalog=eftest2_w49;User ID=sa;Password=dockerStrongPwd123;Trust Server Certificate=True";
 
-            var builder = new SqlConnectionStringBuilder
-            {
-                DataSource = "localhost",
-                UserID = "sa",
-                Password = "dockerStrongPwd123",
-                InitialCatalog = "AssetTracker",
-                TrustServerCertificate = true
-            };
+            // var builder = new SqlConnectionStringBuilder
+            // {
+            //     DataSource = "localhost",
+            //     UserID = "sa",
+            //     Password = "dockerStrongPwd123",
+            //     InitialCatalog = "AssetTracker",
+            //     TrustServerCertificate = true
+            // };
             
-            string ConnectionString = builder.ConnectionString;        
-            // string ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=efdb1;Integrated Security=True;";
+            // string ConnectionString = builder.ConnectionString;        
+            string ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=AssetTracker;Integrated Security=True;";
 
             OptionsBuilder.UseSqlServer(ConnectionString);
         }
