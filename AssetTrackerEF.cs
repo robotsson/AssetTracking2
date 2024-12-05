@@ -142,6 +142,7 @@ namespace AssetTrackerEF
 
         public void DeleteAllAssets()
         {
+            WriteLine("Deleting all assets in database");
             assetDb.Assets.RemoveRange( assetDb.Assets.ToList() );
             assetDb.SaveChanges();
         }
@@ -506,7 +507,6 @@ namespace AssetTrackerEF
                 case "S":
                     ShowStats(); 
                     break;
-
 
                 case "Q":
                     WriteLine("\nGoodbye!");
