@@ -37,8 +37,11 @@ namespace AssetTrackerEF
         {
             base.OnModelCreating(modelBuilder);
 
-            // Data Seeding
+            modelBuilder.Entity<Asset>()
+                .Property(b => b.Price)
+                .HasPrecision(18, 2);
 
+            // Data Seeding
             modelBuilder.Entity<Computer>().HasData(
                 new Computer { Id = 1, Brand = "HP", Model = "Elitebook", Price = 1176.03m, Currency = "EUR", DatePurchased = new DateOnly( 2019, 6, 1 ), Office = "Spain" },
                 new Computer { Id = 3, Brand = "Asus", Model = "W234", Price = 4900m, Currency = "SEK", DatePurchased = new DateOnly( 2020, 10, 2 ), Office = "Sweden" },
