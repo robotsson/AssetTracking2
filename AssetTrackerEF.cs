@@ -50,17 +50,16 @@ namespace AssetTrackerEF
                     assetDb.Assets.OrderBy(x => EF.Property<string>(x, "Discriminator") )
                           .ThenBy(x => x.DatePurchased)
                           .ToList();
-
-             
+       
             WriteLine 
             ( 
                 "Type".PadRight(15) +
-                "".PadRight(15) +
+                "Brand".PadRight(15) +
                 "Model".PadRight(20) +
                 "Price".PadRight(20) +
                 "US Price".PadRight(20) +
                 "Date Purchased".PadRight(18) +
-                "Office"
+                "Office" 
             ); 
 
             WriteLine
@@ -76,7 +75,6 @@ namespace AssetTrackerEF
 
             foreach (Asset asset in sortedAssets)
             {
-      
                 if( asset.MarkedRed() )
                 {
                     ForegroundColor = ConsoleColor.Red;
@@ -387,17 +385,29 @@ namespace AssetTrackerEF
             }
         }
 
+        public void UpdateAsset()
+        {
+            WriteLine("Update asset");
+        }
+
+        public void DeleteAsset()
+        {
+            WriteLine("Delete asset");
+        }
+
         /*
             Helper Method to display all possible menu choices
         */
         public void ListCommands()
         {
-            WriteLine("\n  A - Add new asset to list");
-            WriteLine("  P - Print list sorted by Office");
-            WriteLine("  T - Print list sorted by Type");
-            WriteLine("  S - Show asset list stats");
-            WriteLine("  F - Fill asset list with test data");
-            WriteLine("  D - Delete all assets");
+            WriteLine("\n  C - Create new asset");
+            WriteLine("  R - Read and Print all assets (sorted by type)");
+            WriteLine("  U - Update Asset");
+            WriteLine("  D - Delete Asset");
+
+            WriteLine();
+            WriteLine("  O - Read and Print all assets (sorted by Office)");
+            WriteLine("  S - Show asset database stats");
             WriteLine("  Q - Quit");
             WriteLine();
             Write("Enter menu choice: ");
@@ -408,7 +418,7 @@ namespace AssetTrackerEF
         */
         public void ShowStats()
         {
-            List<Asset> assets = assetDb.Assets.ToList();
+            // List<Asset> assets = assetDb.Assets.ToList();
 
             int count = assetDb.Assets.Count();
             int computers = assetDb.Assets.OfType<Computer>().Count();
@@ -440,12 +450,19 @@ namespace AssetTrackerEF
             Run method contains "Main Menu" to and reads user input
             to perform actions:
 
-            A - Add new asset to list
-            P - Print list sorted by Office
-            T - Print list sorted by Type
+            C - Add new asset 
+            R - Read and print all assets (sorted by type)
+            U - Update asset
+            D - Delete asset
+
+            O - Read and print all assets (sorted by Office)
             S - Show asset list stats
-            F - Fill asset list with test data
-            L - List commands
+            Q - Quit
+
+            Commands for Development only
+            F - Fill database table with assets
+            W - Remove all assets
+
             Q - Quit
 
             return: false if user entered Q to quit, true otherwise
@@ -458,33 +475,38 @@ namespace AssetTrackerEF
                   
             switch( input )
             {
-                case "A":  
+                case "C":  
                     AddAsset();
                     break;
             
-                case "P":
-                    PrettyPrint();
-                    break;
-
-                case "T":
+                case "R":
                     PrettyPrint( false );
                     break;
 
-                case "C":
-                    ListCommands();
+                case "U":
+                    UpdateAsset();
+                    break;
+
+                case "D":
+                    DeleteAsset();
+                    break;                    
+
+                case "O":
+                    PrettyPrint();
                     break;
 
                 case "F":
                     InsertSampleData();           
                     break;
 
-                case "D":
+                case "W":
                     DeleteAllAssets();
                     break;
 
                 case "S":
                     ShowStats(); 
                     break;
+
 
                 case "Q":
                     WriteLine("\nGoodbye!");
