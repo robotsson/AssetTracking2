@@ -32,7 +32,7 @@ namespace AssetTrackerEF
         {
             // List<Asset> assets = assetDb.Assets.ToList();
 
-            if( assetDb.Assets.Count() == 0 )
+            if( !assetDb.Assets.Any() )
             {
                 WriteLine("\nAsset db is empty!");
                 return; 
@@ -231,6 +231,11 @@ namespace AssetTrackerEF
                             asset.Office = "Germany";
                             done = true;
                         }
+                        if( input.Equals("France", OrdinalIgnoreCase ) )
+                        {
+                            asset.Office = "France";
+                            done = true;
+                        }
                         else if( input.Equals("Sweden", OrdinalIgnoreCase ) )
                         {   
                             asset.Office = "Sweden";
@@ -267,7 +272,7 @@ namespace AssetTrackerEF
                     {
                         string currency = "USD"; // Default to USD
                         
-                        if( asset.Office == "Spain" )  
+                        if( asset.Office == "Spain" || asset.Office == "France" || asset.Office == "Germany" )   
                         {
                             currency = "EUR";
                         }
