@@ -28,6 +28,16 @@ namespace AssetTrackerEF {
             }
         }
 
+        public override string ToString()
+        {
+            return this.GetType().Name.PadRight(15) + 
+                   this.Brand?.PadRight(15) +
+                   this.Model?.PadRight(20) +
+                   (this.Price.ToString("N2") + " " + this.Currency).PadRight(20) +
+                   this.DatePurchased.ToString("yyyy-MM-dd").PadRight(18) +
+                   this.Office;
+        }
+
     }
 
     public class Phone : Asset {}

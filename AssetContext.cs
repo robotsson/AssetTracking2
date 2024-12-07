@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
-using System.Data.Common;
+using System.Runtime.InteropServices;
 
 namespace AssetTrackerEF
 {
@@ -12,11 +12,16 @@ namespace AssetTrackerEF
         public DbSet<Computer> Computer { get; set; } = null!;
         public DbSet<Phone> Phone { get; set; } = null!;
 
-
+        /* Setting connection string */
         protected override void OnConfiguring(DbContextOptionsBuilder OptionsBuilder)
         {
 
-            // string ConnectionString = "Data Source=localhost;Initial Catalog=eftest2_w49;User ID=sa;Password=dockerStrongPwd123;Trust Server Certificate=True";
+            // Default connection string for LocalDB file on Windows
+            string ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=AssetTrackerEF-pt2412;Integrated Security=True;";
+
+            if( RuntimeInformation.IsOSPlatform(OSPlatform.OSX) )
+            {
+                // string ConnectionString = "Data Source=localhost;Initial Catalog=eftest2_w49;User ID=sa;Password=dockerStrongPwd123;Trust Server Certificate=True";
 
             // var builder = new SqlConnectionStringBuilder
             // {
@@ -33,6 +38,7 @@ namespace AssetTrackerEF
             OptionsBuilder.UseSqlServer(ConnectionString);
         }
 
+        /* Configure model and data seeding */ 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -55,7 +61,7 @@ namespace AssetTrackerEF
                 new Phone { Id = 2, Brand = "Apple", Model = "Iphone 15", Price = 10000m, Currency = "USD", DatePurchased = new DateOnly( 2024, 9, 11 ), Office = "USA" },
                 new Phone { Id = 5, Brand = "Apple", Model = "iPhone", Price = 818.18m, Currency = "EUR", DatePurchased = new DateOnly( 2020, 9, 25 ), Office = "Spain" },
                 new Phone { Id = 6, Brand = "Apple", Model = "iPhone", Price = 10375m, Currency = "SEK", DatePurchased = new DateOnly( 2018, 7, 15 ), Office = "Sweden" },
-                new Phone { Id = 8, Brand = "Motorola", Model = "Razr", Price = 6083.33m, Currency = "SEK", DatePurchased = new DateOnly( 2022, 5, 16 ), Office = "Sweden" },
+                new Phone { Id = 8, Brand = "Motorola", Model = "Razr", Price = 6083.33m, Currency = "SEK", DatePurchased = new DateOnly( 2022, 8, 16 ), Office = "Sweden" },
                 new Phone { Id = 9, Brand = "Samsung", Model = "Galaxy S23", Price = 8083.33m, Currency = "SEK", DatePurchased = new DateOnly( 2023, 3, 16 ), Office = "Sweden" },
                 new Phone { Id = 12, Brand = "Nokia", Model = "3310", Price = 160.11m, Currency = "EUR", DatePurchased = new DateOnly( 2019, 5, 16 ), Office = "Germany" },
                 new Phone { Id = 13, Brand = "Xiaomi", Model = "14 Ultra", Price = 808.08m, Currency = "EUR", DatePurchased = new DateOnly( 2023, 3, 16 ), Office = "France" } 

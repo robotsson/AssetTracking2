@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AssetTrackerEF.Migrations
 {
     [DbContext(typeof(AssetTrackerContext))]
-    [Migration("20241205182833_HasPrecision")]
-    partial class HasPrecision
+    [Migration("20241207181546_AssetTracker")]
+    partial class AssetTracker
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -177,7 +177,7 @@ namespace AssetTrackerEF.Migrations
                             Id = 8,
                             Brand = "Motorola",
                             Currency = "SEK",
-                            DatePurchased = new DateOnly(2022, 5, 16),
+                            DatePurchased = new DateOnly(2022, 8, 16),
                             Model = "Razr",
                             Office = "Sweden",
                             Price = 6083.33m

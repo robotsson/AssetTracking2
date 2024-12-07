@@ -8,11 +8,30 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AssetTrackerEF.Migrations
 {
     /// <inheritdoc />
-    public partial class DataSeed : Migration
+    public partial class AssetTracker : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Assets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Brand = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Model = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DatePurchased = table.Column<DateOnly>(type: "date", nullable: false),
+                    Office = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Discriminator = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Assets", x => x.Id);
+                });
+
             migrationBuilder.InsertData(
                 table: "Assets",
                 columns: new[] { "Id", "Brand", "Currency", "DatePurchased", "Discriminator", "Model", "Office", "Price" },
@@ -25,7 +44,7 @@ namespace AssetTrackerEF.Migrations
                     { 5, "Apple", "EUR", new DateOnly(2020, 9, 25), "Phone", "iPhone", "Spain", 818.18m },
                     { 6, "Apple", "SEK", new DateOnly(2018, 7, 15), "Phone", "iPhone", "Sweden", 10375m },
                     { 7, "Lenovo", "USD", new DateOnly(2019, 5, 21), "Computer", "Yoga 530", "USA", 1030m },
-                    { 8, "Motorola", "SEK", new DateOnly(2022, 5, 16), "Phone", "Razr", "Sweden", 6083.33m },
+                    { 8, "Motorola", "SEK", new DateOnly(2022, 8, 16), "Phone", "Razr", "Sweden", 6083.33m },
                     { 9, "Samsung", "SEK", new DateOnly(2023, 3, 16), "Phone", "Galaxy S23", "Sweden", 8083.33m },
                     { 10, "Apple", "EUR", new DateOnly(2022, 7, 13), "Computer", "Macbook Pro", "Spain", 970m },
                     { 11, "Asus", "SEK", new DateOnly(2024, 10, 15), "Computer", "ROG 500", "Sweden", 9999.90m },
@@ -37,70 +56,8 @@ namespace AssetTrackerEF.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
-                table: "Assets",
-                keyColumn: "Id",
-                keyValue: 1);
-
-            migrationBuilder.DeleteData(
-                table: "Assets",
-                keyColumn: "Id",
-                keyValue: 2);
-
-            migrationBuilder.DeleteData(
-                table: "Assets",
-                keyColumn: "Id",
-                keyValue: 3);
-
-            migrationBuilder.DeleteData(
-                table: "Assets",
-                keyColumn: "Id",
-                keyValue: 4);
-
-            migrationBuilder.DeleteData(
-                table: "Assets",
-                keyColumn: "Id",
-                keyValue: 5);
-
-            migrationBuilder.DeleteData(
-                table: "Assets",
-                keyColumn: "Id",
-                keyValue: 6);
-
-            migrationBuilder.DeleteData(
-                table: "Assets",
-                keyColumn: "Id",
-                keyValue: 7);
-
-            migrationBuilder.DeleteData(
-                table: "Assets",
-                keyColumn: "Id",
-                keyValue: 8);
-
-            migrationBuilder.DeleteData(
-                table: "Assets",
-                keyColumn: "Id",
-                keyValue: 9);
-
-            migrationBuilder.DeleteData(
-                table: "Assets",
-                keyColumn: "Id",
-                keyValue: 10);
-
-            migrationBuilder.DeleteData(
-                table: "Assets",
-                keyColumn: "Id",
-                keyValue: 11);
-
-            migrationBuilder.DeleteData(
-                table: "Assets",
-                keyColumn: "Id",
-                keyValue: 12);
-
-            migrationBuilder.DeleteData(
-                table: "Assets",
-                keyColumn: "Id",
-                keyValue: 13);
+            migrationBuilder.DropTable(
+                name: "Assets");
         }
     }
 }

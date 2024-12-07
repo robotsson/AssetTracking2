@@ -148,6 +148,7 @@ namespace AssetTrackerEF
         }
 
 
+
         // For code review: 
         // This method is a bit long, and too deep, would like to refactor
         // to make it a little bit flatter and maybe divide it into more
@@ -393,8 +394,19 @@ namespace AssetTrackerEF
 
         public void DeleteAsset()
         {
-            WriteLine("Delete asset");
-        }
+            List<Asset> assets = assetDb.Assets.ToList();
+   
+            int index = 1;
+            foreach( Asset asset in assets )
+            {
+                WriteLine( (index+".").PadRight(5)+asset.ToString() );
+                index++;
+            }
+
+            WriteLine("\nEnter index to delete: ");
+            string? input = ReadLine()?.Trim();  
+
+        } 
 
         /*
             Helper Method to display all possible menu choices

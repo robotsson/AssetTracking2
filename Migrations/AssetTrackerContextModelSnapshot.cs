@@ -174,7 +174,7 @@ namespace AssetTrackerEF.Migrations
                             Id = 8,
                             Brand = "Motorola",
                             Currency = "SEK",
-                            DatePurchased = new DateOnly(2022, 5, 16),
+                            DatePurchased = new DateOnly(2022, 8, 16),
                             Model = "Razr",
                             Office = "Sweden",
                             Price = 6083.33m
