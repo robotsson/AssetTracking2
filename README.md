@@ -10,13 +10,14 @@ This run this application *.NET 8.0 SDK and Runtime*, *Entity Framework* and *SQ
 **Windows**: Requires installation of SQL Server, I have used SQL Express:<br>
 https://www.microsoft.com/en-us/sql-server/sql-server-downloads<p>
 
-**Mac**: there is a Docker image with the SQL server available, so install *Docker* and then the *SQL Server Docker Image*:<p>
+**Mac**: there is a Docker image with the SQL server available, so install *Docker* and then the *SQL Server Docker Image* using:<p>
 ```
 sudo docker pull mcr.microsoft.com/mssql/server:2022-latest
 ```
 
-It is not required but helps to have *Azure Data Studio*, and the command line tools *sqlcmd* and *mssql* these tools installed:<p>
-[Azure Data Studio](https://learn.microsoft.com/en-us/azure-data-studio/download-azure-data-studio)<p>
+It is not required but helps to have these tools installed: *Azure Data Studio*, and the command line tools *sqlcmd* and *mssql*<p>
+Azure Data Studio:<br> 
+https://learn.microsoft.com/en-us/azure-data-studio/download-azure-data-studio<p>
 
 Installing *sqlcmd* and *mssql* using homebrew:
 ```
