@@ -12,10 +12,11 @@ This run this application *.NET 8.0 SDK and Runtime*, *Entity Framework* and *SQ
 SQL Express can be downloaded here:<br>
 https://www.microsoft.com/en-us/sql-server/sql-server-downloads<p>
 
-**Mac**: I have used a *Docker* image with the SQL server available, so install *Docker* and then the *SQL Server Docker Image*:<p>
+**Mac**: I have used a *Docker* image with the SQL server.<p>
 
 Docker:<br>
-https://docs.docker.com/desktop/setup/install/mac-install/
+https://docs.docker.com/desktop/setup/install/mac-install/<p>
+The Docker image can be installed using:
 ```
 sudo docker pull mcr.microsoft.com/mssql/server:2022-latest
 ```
