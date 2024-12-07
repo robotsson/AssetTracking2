@@ -7,10 +7,15 @@ This run this application *.NET 8.0 SDK and Runtime*, *Entity Framework* and *SQ
 
 ### Install SQL Server
 
-**Windows**: I have used SQL Express:<br>
+**Windows**: I have used SQL Express.
+
+SQL Express can be downloaded here:<br>
 https://www.microsoft.com/en-us/sql-server/sql-server-downloads<p>
 
-**Mac**: there is a Docker image with the SQL server available, so install *Docker* and then the *SQL Server Docker Image* using:<p>
+**Mac**: I have used a *Docker* image with the SQL server available, so install *Docker* and then the *SQL Server Docker Image*:<p>
+
+Docker:<br>
+https://docs.docker.com/desktop/setup/install/mac-install/
 ```
 sudo docker pull mcr.microsoft.com/mssql/server:2022-latest
 ```
