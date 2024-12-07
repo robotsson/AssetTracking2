@@ -1,15 +1,26 @@
 # AssetTrackingEF
-Asset tracking system implemented using Entity Framework.
+Asset tracking system implemented in C# using Entity Framework.<p>
 
-How to run:
+How to run:<p>
 
-On Windows: Requires installation of SQL Server, I have used SQL Express:
-https://www.microsoft.com/en-us/sql-server/sql-server-downloads
+On Windows: Requires installation of SQL Server, I have used SQL Express:<br>
+https://www.microsoft.com/en-us/sql-server/sql-server-downloads<p>
 
-On Mac, there is a Docker image, so install Docker and then SQL Server Docker Image:
-sudo docker pull mcr.microsoft.com/mssql/server:2022-latest
+On Mac, there is a Docker image, so install Docker and then SQL Server Docker Image:<br>
+sudo docker pull mcr.microsoft.com/mssql/server:2022-latest<p>
 
+In the project folder I have used the dotnet command line tools for package installation:<br>
+dotnet add package Microsoft.EntityFrameworkCore<br>
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer<br>
+dotnet add package Microsoft.EntityFrameworkCore.Tools<p>
 
+And command line tools installed globally:<br>
+dotnet tool install --global dotnet-ef
 
-[Sample Assets table](Assets.md)
+Database can then be initialized using:<br>
+dotnet ef update database
+
+After that the app can be started using:<br>
+dotnet run
+
 
