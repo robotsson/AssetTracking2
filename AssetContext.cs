@@ -17,9 +17,9 @@ namespace AssetTrackerEF
         {
 
             // Default connection string for LocalDB file on Windows
-            string ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=AssetTrackerEF-pt2412;Integrated Security=True;";
+            string ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=AssetTrackerEF-pt2412;Integrated Security=True";
 
-            if( RuntimeInformation.IsOSPlatform(OSPlatform.OSX) )
+            if( !RuntimeInformation.IsOSPlatform(OSPlatform.Windows) )
             {
                 // string ConnectionString = "Data Source=localhost;Initial Catalog=eftest2_w49;User ID=sa;Password=dockerStrongPwd123;Trust Server Certificate=True";
 
@@ -28,14 +28,15 @@ namespace AssetTrackerEF
                     DataSource = "localhost",
                     UserID = "sa",
                     Password = "dockerStrongPwd123",
-                    InitialCatalog = "AssetTracker",
+                    InitialCatalog = "AssetTrackerEF-pt2412",
                     TrustServerCertificate = true
                 };
             
                 ConnectionString = builder.ConnectionString;     
             }   
-            
+
             OptionsBuilder.UseSqlServer(ConnectionString);
+
         }
 
         /* Configure model and data seeding */ 

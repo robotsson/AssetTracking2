@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using static System.Console;
 using static System.StringComparison;
@@ -126,7 +127,7 @@ namespace AssetTrackerEF
                 new Computer { Brand = "Apple", Model = "Macbook Pro", Price = 970m, Currency = "EUR", DatePurchased = new DateOnly( 2022, 7, 13 ), Office = "Spain" },
                 new Phone { Brand = "Apple", Model = "iPhone", Price = 818.18m, Currency = "EUR", DatePurchased = new DateOnly( 2020, 9, 25 ), Office = "Spain" },
                 new Phone { Brand = "Apple", Model = "iPhone", Price = 10375m, Currency = "SEK", DatePurchased = new DateOnly( 2018, 7, 15 ), Office = "Sweden" },
-                new Phone { Brand = "Motorola", Model = "Razr", Price = 8083.33m, Currency = "SEK", DatePurchased = new DateOnly( 2022, 5, 16 ), Office = "Sweden" },
+                new Phone { Brand = "Motorola", Model = "Razr", Price = 8083.33m, Currency = "SEK", DatePurchased = new DateOnly( 2022, 8, 16 ), Office = "Sweden" },
                 new Phone { Brand = "Samsung", Model = "Galaxy S23", Price = 8083.33m, Currency = "SEK", DatePurchased = new DateOnly( 2023, 3, 16 ), Office = "Sweden" },
                 new Computer { Brand = "Asus", Model = "ROG 500", Price = 9999.90m, Currency = "SEK", DatePurchased = new DateOnly( 2024, 10, 15 ), Office = "Sweden" },
                 new Phone { Brand = "Nokia", Model = "3310", Price = 160.11m, Currency = "EUR", DatePurchased = new DateOnly( 2019, 5, 16 ), Office = "Germany" },
@@ -174,7 +175,7 @@ namespace AssetTrackerEF
                     }
                     else if( input.Length != 0 )
                     {
-                        asset.Model = input;
+                        asset.Brand = input;
                         done = true;
                     }
 
@@ -387,11 +388,241 @@ namespace AssetTrackerEF
             }
         }
 
-        public void UpdateAsset()
+       /*
+            Helper function for UpdatreAsset
+            return: true if asset was added, false if user aborted
+        */ 
+        public bool UpdateAssetProperties( Asset asset )
         {
-            WriteLine("Update asset");
+            // Brand property input loop
+            bool done = false;
+            while( !done )
+            {
+                Write($"Enter brand name [{asset.Brand}]: ");
+                string? input = ReadLine()?.Trim();
+                if( input is not null)
+                {
+                    if( input.Equals("Q", OrdinalIgnoreCase) )
+                    {
+                        return false;
+                    }
+                    else if( input.Length != 0 )
+                    {
+                        asset.Brand = input;
+                        done = true;
+                    }
+                }
+                done = true; 
+            }
+
+            // Model property input loop
+            done = false;
+            while( !done )
+            {
+                Write($"Enter model name [{asset.Model}]: ");
+                
+                string? input = ReadLine()?.Trim();
+                if( input is not null)
+                {
+                    if( input.Equals("Q", OrdinalIgnoreCase) )
+                    {
+                        return false;
+                    }
+                    else if( input.Length != 0 )
+                    {
+                        asset.Model = input;
+                        done = true;
+                    } 
+                }
+                done = true; 
+            }
+
+            // Office (Countries) user input loop
+            done = false;
+            while( !done )
+            {
+                Write($"Enter Office (France, Germany, Spain, Sweden or USA) [{asset.Office}]: ");
+                string? input = ReadLine()?.Trim();
+
+                if( input is not null )
+                {
+                    if( input.Length == 0 )
+                    {   
+                    }
+                    else if( input.Equals("Q", OrdinalIgnoreCase) )
+                    {
+                        return false;
+                    }
+                    else
+                    {               
+                        if( input.Equals("Spain", OrdinalIgnoreCase ) )
+                        {
+                            asset.Office = "Spain";
+                            done = true;
+                        }
+                        if( input.Equals("Germany", OrdinalIgnoreCase ) )
+                        {
+                            asset.Office = "Germany";
+                            done = true;
+                        }
+                        if( input.Equals("France", OrdinalIgnoreCase ) )
+                        {
+                            asset.Office = "France";
+                            done = true;
+                        }
+                        else if( input.Equals("Sweden", OrdinalIgnoreCase ) )
+                        {   
+                            asset.Office = "Sweden";
+                            done = true;
+                        }   
+                        else if( input.Equals("USA", OrdinalIgnoreCase ) ) 
+                        {
+                            asset.Office = "USA";
+                            done = true;
+                        }
+                        else
+                        {
+                            WriteLine("Not a valid office!");                          
+                        }
+                    }
+                }
+                done = true;
+            }
+
+            // Price property input loop
+            done = false;
+            while( !done )
+            {
+                Write($"Enter amount paid [{asset.Price}]: ");
+
+                string? input = ReadLine()?.Trim();
+                if( input is not null )
+                {
+                    if( input.Equals("Q", OrdinalIgnoreCase ) )
+                    {
+                        return false;
+                    }
+
+                    if( decimal.TryParse(input, out decimal amount) )
+                    {
+                        string currency = "USD"; // Default to USD
+                        
+                        if( asset.Office == "Spain" || asset.Office == "France" || asset.Office == "Germany" )   
+                        {
+                            currency = "EUR";
+                        }
+
+                        if( asset.Office == "Sweden" )
+                        {
+                            currency = "SEK";
+                        }
+                        
+                        asset.Price = amount;
+                        asset.Currency = currency; 
+                        done = true;
+                    }
+                    else
+                    {
+                        WriteLine("Invalid amount value entered!");
+                    }
+                }
+                done = true; 
+            }
+
+            // DateOnly user input loop
+            // asset.DatePurchased = DateOnly.FromDateTime(DateTime.Today); 
+            done = false;
+            while( !done )
+            {
+                Write($"Enter Purchase date in YYYY-MM-DD format or Today for today's date. [{asset.DatePurchased}]: ");
+                string? input = ReadLine()?.Trim();   
+
+                if( input is not null )
+                {
+                    if( input.Length == 0 )
+                    {
+                    }
+                    else if( input.Equals("Q", OrdinalIgnoreCase) )
+                    {
+                        return false;
+                    }
+                    else if( input.Equals("Today", OrdinalIgnoreCase) )
+                    {
+                        asset.DatePurchased = DateOnly.FromDateTime(DateTime.Today);
+                        done = true;    
+                    }
+                    else 
+                    {
+                        if( DateOnly.TryParse( input, out DateOnly date ))
+                        {
+                            asset.DatePurchased = date;
+                            done = true;
+                        }
+                        else
+                        {
+                            WriteLine("Was not able to understand the date format. Please try again!");
+                        }
+                    }
+                }
+                done = true; 
+            }
+    
+            assetDb.Assets.Update(asset);
+            assetDb.SaveChanges();
+
+            return true;
         }
 
+
+
+        /* Edits asset at position given in user input */
+        public void UpdateAsset()
+        {
+            List<Asset> assets = assetDb.Assets.ToList();
+   
+            int index = 1;
+            foreach( Asset asset in assets )
+            {
+                WriteLine( (index+".").PadRight(5)+asset.ToString() );
+                index++;
+            }
+
+            WriteLine("\nEnter index to delete, Q to abort: ");
+            string? input = ReadLine()?.Trim();  
+
+            if( int.TryParse(input, out int result ) )
+            {
+                if( result >= 0 && result <= assets.Count )
+                {
+                    WriteLine($"Editing asset at position {result}.");
+                    if( UpdateAssetProperties( assets[result-1]) )
+                        {
+                            WriteLine($"Asset updated!");
+                        }
+                        else
+                        {
+                            WriteLine("Aborted! Returning to Main Menu.");
+                            return; 
+                        }
+                }
+                else
+                {
+                    WriteLine("Index not in range! Returning to main menu.");
+                }
+                
+            }
+            else if ( input is not null && input.Equals("Q", OrdinalIgnoreCase) )
+            {
+                WriteLine("Aborted! Returning to main menu.");
+            }
+            else 
+            {
+                WriteLine("Unrecognized command, returning to main menu.");
+            }
+
+        } 
+
+        /* Deletes asset at position given in user input */ 
         public void DeleteAsset()
         {
             List<Asset> assets = assetDb.Assets.ToList();
@@ -403,8 +634,31 @@ namespace AssetTrackerEF
                 index++;
             }
 
-            WriteLine("\nEnter index to delete: ");
+            Write("\nEnter index to delete, Q to abort: ");
             string? input = ReadLine()?.Trim();  
+
+            if( int.TryParse(input, out int result ) )
+            {
+                if( result >= 0 && result <= assets.Count )
+                {
+                    WriteLine($"Deleting asset at position {result}.");
+                    assetDb.Assets.Remove( assets[result-1]);
+                    assetDb.SaveChanges();
+                }
+                else
+                {
+                    WriteLine("Index not in range! Returning to main menu.");
+                }
+                
+            }
+            else if ( input is not null && input.Equals("Q", OrdinalIgnoreCase) )
+            {
+                WriteLine("Aborted! Returning to main menu.");
+            }
+            else 
+            {
+                WriteLine("Unrecognized command, returning to main menu.");
+            }
 
         } 
 
