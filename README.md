@@ -12,9 +12,11 @@ https://www.microsoft.com/en-us/sql-server/sql-server-downloads<p>
 ```sudo docker pull mcr.microsoft.com/mssql/server:2022-latest```<p>
 
 In the project folder I have used the dotnet command line tools for package installation:<p>
-```dotnet add package Microsoft.EntityFrameworkCore
-dotnet add package Microsoft.EntityFrameworkCore.SqlServer<br>
-dotnet add package Microsoft.EntityFrameworkCore.Tools```
+```
+dotnet add package Microsoft.EntityFrameworkCore
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+```
 
 And command line tools installed globally:<p>
 ```dotnet tool install --global dotnet-ef```
