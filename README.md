@@ -1,7 +1,7 @@
 # AssetTrackingEF
 Asset tracking system implemented in C# using Entity Framework and SQL Server.<p>
 
-## How to run:<p>
+## How to run the application
 
 On Windows: Requires installation of SQL Server, I have used SQL Express:<br>
 https://www.microsoft.com/en-us/sql-server/sql-server-downloads<p>
