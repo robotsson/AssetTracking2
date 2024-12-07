@@ -7,7 +7,7 @@ This run this application *.NET 8.0 SDK and Runtime*, *Entity Framework* and *SQ
 
 ### Install SQL Server
 
-**Windows**: Requires installation of SQL Server, I have used SQL Express:<br>
+**Windows**: I have used SQL Express:<br>
 https://www.microsoft.com/en-us/sql-server/sql-server-downloads<p>
 
 **Mac**: there is a Docker image with the SQL server available, so install *Docker* and then the *SQL Server Docker Image* using:<p>
