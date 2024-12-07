@@ -28,7 +28,7 @@ namespace AssetTrackerEF
             // };
             
             // string ConnectionString = builder.ConnectionString;        
-            string ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=AssetTracker;Integrated Security=True;";
+            string ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=AssetTrackerEF-pt2412;Integrated Security=True;";
 
             OptionsBuilder.UseSqlServer(ConnectionString);
         }
