@@ -521,7 +521,7 @@ namespace AssetTrackerEF
                         asset.Currency = currency; 
                         done = true;
                     }
-                    else
+                    else if( !input.Equals(""))
                     {
                         WriteLine("Invalid amount value entered!");
                     }
@@ -534,7 +534,7 @@ namespace AssetTrackerEF
             done = false;
             while( !done )
             {
-                Write($"Enter Purchase date in YYYY-MM-DD format or Today for today's date. [{asset.DatePurchased}]: ");
+                Write($"Enter Purchase date in YYYY-MM-DD format or Today for today's date. [{asset.DatePurchased.ToString("yyyy-MM-dd")}]: ");
                 string? input = ReadLine()?.Trim();   
 
                 if( input is not null )
